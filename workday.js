@@ -14,4 +14,33 @@ const saveButton = document.querySelectorAll("button");
 const timeList = ["9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm"];
 const timeId = ["9", "10", "11", "12", "13", "14", "15", "16", "17"];
 const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-            
+
+//timeList and timeId appends the data 
+for (let i = 0; i < timeList.length; i++) {
+    let createRow = $("<div class='row time-block'>").attr("id", timeId[i]);
+    let createTime = $("<div class='hour col-1'>");
+
+    // create the textarea
+    let createTextarea = $("<textarea class='col-10'>");
+    createTextarea.attr("id", timeList[i]);
+
+// this will color the teaxtarea based on the timeline 
+// grey equals past the hour
+// red equals current hour
+// green eqauls future hours
+function updateHour() {
+    var currentHour = moment().hours();
+    $(".time-block").each(function () {
+        var blockHour = parseInt($(this).attr("id").split(" ")[0]);
+
+        if (blockHour < currentHour) {
+            $(this).addClass("past");
+        } else if (blockHour === currentHour) {
+            $(this).removeClass("past");
+            $(this).addClass("present");
+        } else {
+            $(this).removeClass("past");
+            $(this).removeClass("present");
+            $(this).addClass("future");
+        }
+
